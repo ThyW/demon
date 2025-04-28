@@ -16,6 +16,14 @@
 #define DEV_NULL "/dev/null"
 #define PID_FILE "/run/demon.pid"
 
+// Main function of the daemon.
+int daemon_main(int argc, char **argv)
+{
+    while (1) {
+    }
+    return 0;
+}
+
 int close_fds_dir(int skip_pipes[2])
 {
     DIR *fddir;
@@ -297,10 +305,8 @@ int main(int argc, char *argv[])
             write(pipes[1], &demon_pid, sizeof(demon_pid));
             close(pipes[1]);
 
-            while (1) {
-                // Empty loop so that it runs forever
-                // Entire daemon logic goes here
-            }
+            error = daemon_main(argc, argv);
+            exit(error);
         } else {
             // Exit first child, so that daemon process gets parent `PID` 1.
             exit(0);
